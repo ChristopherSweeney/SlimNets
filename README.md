@@ -1,31 +1,32 @@
 # SlimNets
 
-A comparison of popular methods to create more efficient (smaller and faster) Nueral Networks (post training, or during training?).
+A comparison of popular methods to create more efficient (smaller and faster) Nueral Networks.
 
 
 Framework:
-python-tensorflow for GCP compatibillity
+Pytorch
 
 Dataset:
 CIFAR10
 
-Model: Smallish models
-MobileNet, VGGnet
+Model:
+VGGnet11,16,19
 
 Methods:
-1.Pruning
-2.Low-Rank Factorization
-3.Knowledge Distillation
+1.Pruning (sparse)
+2. Low-Rank Factorization
+3. Knowledge Distillation
 
-Absolute Metrics: create framework for extracting and visualizing these quantities from various methods
+Absolute Metrics:
 
-1. Model size (MB)
+1. Model size (weights)
 2. Test Accuracy
 3. Training Time (h)
 4. Inference Time (s)
+5. Runtime model size
 
 Relative Metrics:
 1. Model compression rate
 2. training/inference accelerations
-3. relative accuracy between prunned models and models with 
+3. relative accuracy between small and large models.
 
