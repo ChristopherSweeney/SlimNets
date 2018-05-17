@@ -13,6 +13,7 @@ import torchvision.datasets as datasets
 import vgg
 
 import math
+import copy
 
 # Variables for training the model
 args = {'arch': 'vgg19',
@@ -117,12 +118,17 @@ def train_and_evaluate_lowrank_model(lrm):
         # evaluate on validation set
         prec1, val_loss = validate(val_loader, lrm, criterion)
 
+        cpu_model = lrm
+        if cuda_enabled:
+            cpu_model = copy.deepcopy(lrm)
+            cpu_model = cpu_model.cpu()
+
         # remember best prec@1 and save checkpoint
         is_best = prec1 > best_prec1
         best_prec1 = max(prec1, best_prec1)
         save_checkpoint({
             'epoch': epoch + 1,
-            'model': lrm.cpu(),
+            'model': cpu_model,
             'best_prec1': best_prec1,
             'train_time': train_time,
             'train_loss': train_loss,
