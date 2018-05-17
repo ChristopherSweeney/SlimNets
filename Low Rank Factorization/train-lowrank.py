@@ -25,7 +25,7 @@ args = {'arch': 'vgg19',
 		  'weight_decay': 5e-4,
 		  'print_freq': 20,
 		  'resume': None,
-		  'evaluate': True,
+		  'evaluate': False,
 		  'half': False,
 		  'save_dir': 'save_temp'}
 best_prec1 = 0
