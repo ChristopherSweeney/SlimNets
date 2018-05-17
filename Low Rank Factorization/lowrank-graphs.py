@@ -58,3 +58,6 @@ def plotData():
 	plt.title('Validation Accuracies')
 	plt.show()
 	print('Best validation accuracy:', bestAcc, ', at epoch', bestEpoch)
+
+if __name__ == '__main__':
+	plotData()
