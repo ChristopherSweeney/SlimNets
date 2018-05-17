@@ -18,16 +18,16 @@ def getCheckpoints(num_epochs):
 
 def plotData():
 	epochs = np.arange(args['epochs'])
-	trainLosses, trainAccs, trainTimes = np.empty((0,)), np.empty((0,)), np.empty((0,))
-	valLosses, valAccs = np.empty((0,)), np.empty((0,))
+	trainLosses, trainAccs, trainTimes = np.empty(0), np.empty(0), np.empty(0)
+	valLosses, valAccs = np.empty(0), np.empty(0)
 	bestAcc, bestEpoch = float('-inf'), None
 	epoch = 0
 	for checkpoint in getCheckpoints(args['epochs']):
-		trainLosses = np.append(trainLosses, checkpoint['train_loss'], axis=0)
-		trainAccs = np.append(trainAccs, checkpoint['train_acc'], axis=0)
-		trainTimes = np.append(trainTimes, checkpoint['train_time'], axis=0)
-		valLosses = np.append(valLosses, checkpoint['val_loss'], axis=0)
-		valAccs = np.append(valAccs, checkpoint['val_acc'], axis=0)
+		trainLosses = np.append(trainLosses, checkpoint['train_loss'])
+		trainAccs = np.append(trainAccs, checkpoint['train_acc'])
+		trainTimes = np.append(trainTimes, checkpoint['train_time'])
+		valLosses = np.append(valLosses, checkpoint['val_loss'])
+		valAccs = np.append(valAccs, checkpoint['val_acc'])
 		if checkpoint['best_prec1'] > bestAcc:
 			bestAcc = checkpoint['best_prec1']
 			bestEpoch = epoch
