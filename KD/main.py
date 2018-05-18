@@ -161,6 +161,8 @@ def main():
             'best_prec1': best_prec1,
         }, is_best, filename=os.path.join(args.save_dir, 'checkpoint_{}.tar'.format(epoch)))
 
+    print best_prec1
+
 
 def train_distill(train_loader, big_model, small_model, criterion, optimizer, epoch):
     """
