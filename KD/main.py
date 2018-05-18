@@ -33,7 +33,7 @@ parser.add_argument('--start-epoch', default=0, type=int, metavar='N',
                     help='manual epoch number (useful on restarts)')
 parser.add_argument('-b', '--batch-size', default=128, type=int,
                     metavar='N', help='mini-batch size (default: 128)')
-parser.add_argument('--lr', '--learning-rate', default=0.05, type=float,
+parser.add_argument('--lr', '--learning-rate', default=0.1, type=float,
                     metavar='LR', help='initial learning rate')
 parser.add_argument('--momentum', default=0.9, type=float, metavar='M',
                     help='momentum')
@@ -52,7 +52,6 @@ parser.add_argument('--half', dest='half', action='store_true',
 parser.add_argument('--save-dir', dest='save_dir',
                     help='The directory used to save the trained models',
                     default='save_temp', type=str)
-
 
 best_prec1 = 0
 
@@ -106,7 +105,7 @@ def get_vgg_model(args):
     return model
 
 def get_slim_model(args):
-    slim_model = slim.ShallowConvNet()
+    slim_model = slim.SimpleConvNet(hidden=1000)
     slim_model.cuda()
     if slim_model is slim.DeepConvNet:
         for m in slim_model.modules():
@@ -114,6 +113,9 @@ def get_slim_model(args):
                 m.weight.data.normal_(0, 0.05)
                 m.bias.data.normal_(0, 0.0)
     return slim_model
+
+def distillation_loss(y, labels, teacher_scores, T, alpha):
+    return nn.KLDivLoss()(nn.functional.log_softmax(y / T), nn.functional.softmax(teacher_scores/T)) * (T*T * 2.0 * alpha) + nn.functional.cross_entropy(y, labels) * (1. - alpha)
 
 def main():
     global args, best_prec1
@@ -127,7 +129,7 @@ def main():
     val_loader = get_val_loader(args)
 
     # define loss function (criterion) and pptimizer
-    criterion = nn.BCELoss().cuda()
+    criterion = distillation_loss
 
     if args.half:
         small_model.half()
@@ -187,21 +189,18 @@ def train_distill(train_loader, big_model, small_model, criterion, optimizer, ep
 
         # compute big model output
         with torch.no_grad():
-            new_target = big_model(input_var).data.cpu().numpy()
-            new_target_tensor = torch.nn.Softmax()(torch.cuda.FloatTensor(new_target))
-            new_target_var = torch.autograd.Variable(new_target_tensor, requires_grad=False)
+            teacher_output = big_model(input_var).data.cpu().numpy()
+            teacher_output = torch.cuda.FloatTensor(teacher_output)
 
-        #criterion = nn.CrossEntropyLoss().cuda()
         # compute output
         output = small_model(input_var)
-        output = torch.nn.Softmax()(small_model(input_var))
 
-        #target_onehot = torch.cuda.FloatTensor(*output.size())
-        #target_onehot.zero_()
-        #target_onehot.scatter_(1, target_var.view(-1, 1), 1)
-        #target_onehot_var = torch.autograd.Variable(target_onehot, requires_grad=False).cuda()
-
-        loss = criterion(output, new_target_var)
+	    # convert original target to one-hot representation
+        target_onehot = torch.cuda.FloatTensor(*output.size())
+        target_onehot.zero_()
+        target_onehot.scatter_(1, target_var.view(-1, 1), 1)
+	
+        loss = criterion(output, target_var, teacher_output, T=20.0, alpha=0.7)
 
         # compute gradient and do SGD step
         optimizer.zero_grad()
