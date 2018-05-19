@@ -26,6 +26,7 @@ import torchvision.models as models
 import math
 import torch.nn as nn
 import torch.nn.init as init
+import Prune_utils as util
 
 ##########################################################
 #wrappers for masking layers
@@ -40,7 +41,7 @@ class MaskedLinear(nn.Linear):
         self.mask_flag = False
     
     def set_mask(self, mask):
-        self.mask = to_var(mask, requires_grad=False)
+        self.mask = util.to_var(mask, requires_grad=False)
         self.weight.data = self.weight.data*self.mask.data
         self.mask_flag = True
     
@@ -65,7 +66,7 @@ class MaskedConv2d(nn.Conv2d):
         self.mask_flag = False
     
     def set_mask(self, mask):
-        self.mask = to_var(mask, requires_grad=False)
+        self.mask = util.to_var(mask, requires_grad=False)
         self.weight.data = self.weight.data*self.mask.data
         self.mask_flag = True
     

@@ -27,6 +27,8 @@ import math
 import torch.nn as nn
 import torch.nn.init as init
 
+import models
+
 #############################################################################
 #utility functions
 ##############################################################################
@@ -188,7 +190,7 @@ class PruneWrapSparse():
         print self.to_string()
         for seq in list(self.model.children()):
             for layer in seq:
-                if isinstance(layer, MaskedLinear) or isinstance(layer, MaskedConv2d):
+                if isinstance(layer, models.MaskedLinear) or isinstance(layer, models.MaskedConv2d):
                     #find weight threshold for layer
                     weight_threshold = self.get_weight_threshold(layer.parameters(),current_sparsity_target) 
                     #set mask

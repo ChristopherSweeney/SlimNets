@@ -2,7 +2,6 @@
 
 A comparison of popular methods to create more efficient (smaller and faster) Nueral Networks.
 
-
 Framework:
 Pytorch
 
@@ -13,7 +12,7 @@ Model:
 VGGnet11,16,19
 
 Methods:
-1.Pruning (sparse)
+1. Gradual Pruning (sparse)
 2. Low-Rank Factorization
 3. Knowledge Distillation
 
