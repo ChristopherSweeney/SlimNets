@@ -131,3 +131,7 @@ if __name__ == '__main__':
     testloader = torch.utils.data.DataLoader(testset, batch_size=args['batch_size'],
                                              shuffle=False, num_workers=args['workers'])
     test(testloader, lrm, nn.CrossEntropyLoss())
+    print("Testing original model")
+    originalModel = torch.load('model_best_cpu.tar')
+    originalModel.cuda()
+    test(testloader, originalModel, nn.CrossEntropyLoss())
