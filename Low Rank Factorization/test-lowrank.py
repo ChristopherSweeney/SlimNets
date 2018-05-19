@@ -81,6 +81,7 @@ def test(loader, model, criterion):
 
     print('Accuracy: {top1.avg:.3f}'.format(top1=top1))
     print('Loss: {losses.avg:.3f}'.format(losses=losses))
+    print('Time: {batch_time.sum:.3f'.format(batch_time=batch_time))
 
     return (top1.avg, losses.avg)
 
