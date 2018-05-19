@@ -122,7 +122,10 @@ if __name__ == '__main__':
     model_path = os.path.join(args['save_dir'], 'lowrank-model-best.tar')
     lrm = load_lowrank_model(model_path)
     testset = datasets.CIFAR10(root='./data', train=False,
-                                           download=True, transform=transform)
+                                           download=True, transform=transforms.Compose([
+            transforms.ToTensor(),
+            normalize,
+        ]))
     testloader = torch.utils.data.DataLoader(testset, batch_size=args['batch_size'],
                                              shuffle=False, num_workers=args['workers'])
     test(testloader, lrm, nn.CrossEntropyLoss())
