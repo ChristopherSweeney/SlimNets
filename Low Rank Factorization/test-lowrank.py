@@ -121,7 +121,7 @@ if __name__ == '__main__':
         os.makedirs(args['save_dir'])
     model_path = os.path.join(args['save_dir'], 'lowrank-model-best.tar')
     lrm = load_lowrank_model(model_path)
-    testset = torchvision.datasets.CIFAR10(root='./data', train=False,
+    testset = datasets.CIFAR10(root='./data', train=False,
                                            download=True, transform=transform)
     testloader = torch.utils.data.DataLoader(testset, batch_size=args['batch_size'],
                                              shuffle=False, num_workers=args['workers'])
