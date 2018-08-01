@@ -33,7 +33,7 @@ import models
 #utility functions
 ##############################################################################
 """
-convinince functions adapted from https://github.com/ChristopherSweeney/pytorch-weights_pruning
+convinince functions adapted from https://github.com/wanglouis49/pytorch-weights_pruning
 """
 def to_var(x, requires_grad=False, volatile=False):
     if torch.cuda.is_available():
@@ -92,9 +92,9 @@ def test(model, loader):
 
 
 ########################################################################################################
-#layer-wise prunning wrapper class
+#layer-wise prunning wrapper class for gradual sparse prunning
 #########################################################################################################
-
+#inspired by https://arxiv.org/pdf/1710.01878.pdf
 
 class PruneWrapSparse():
     def __init__(self,train_start,model,sparsity_initial,sparsity_target,prune_steps,update_rate,train):
