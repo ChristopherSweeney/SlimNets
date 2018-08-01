@@ -29,11 +29,11 @@ import torch.nn.init as init
 import Prune_utils as util
 
 ##########################################################
-#wrappers for masking layers
+#wrappers for masking layers to use in gradual prunning
 #############################################################
 class MaskedLinear(nn.Linear):
     '''
-    Modified from https://github.com/ChristopherSweeney/pytorch-weights_pruning
+    adapted from https://github.com/wanglouis49/pytorch-weights_pruning
     '''
 
     def __init__(self, in_features, out_features, bias=True):
@@ -84,7 +84,7 @@ class MaskedConv2d(nn.Conv2d):
                         self.padding, self.dilation, self.groups)
         
 ###############################################################################
-# Model Definitions from Knowledge Distillation
+# Model Definitions from Knowledge Distillation (relevant files contained in KD directory)
 ###########################################################################
 
 class ShallowConvNet(nn.Module):
