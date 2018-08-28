@@ -26,8 +26,8 @@ Absolute Metrics:
 
 Relative Metrics:
 1. Model compression rate
-2. training/inference accelerations
-3. relative accuracy between small and large models.
+2. Training/inference accelerations
+3. Relative accuracy between small and large models.
 
 References:
 1. https://github.com/chengyangfu/pytorch-vgg-cifar10
@@ -35,3 +35,4 @@ References:
 3. https://github.com/jacobgil/pytorch-pruning/blob/master/finetune.py
 4. https://github.com/bearpaw/pytorch-classification/blob/master/models/cifar/alexnet.py
 5. https://github.com/jiecaoyu/pytorch-nin-cifar10/blob/master/original.py
+6. https://github.com/wanglouis49/pytorch-weights_pruning
