@@ -36,3 +36,13 @@ References:
 4. https://github.com/bearpaw/pytorch-classification/blob/master/models/cifar/alexnet.py
 5. https://github.com/jiecaoyu/pytorch-nin-cifar10/blob/master/original.py
 6. https://github.com/wanglouis49/pytorch-weights_pruning
+
+### Gradual Pruning Progression Curves based on:
+
+M. Zhu and S. Gupta, “To prune, or not to prune: exploring the efficacy
+of pruning for model compression,” ArXiv e-prints, Oct. 2017.
+
+![Alt text](sparse.png?raw=true "Gradual Pruning Progression Curves ")
+
+### VGG 19 Loss Progression with Gradual Pruning
+![Alt text](loss.png?raw=true "VGG 19 Loss Progression with Gradual Pruning")
